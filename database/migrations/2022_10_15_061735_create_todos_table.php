@@ -20,6 +20,7 @@ class CreateTodosTable extends Migration
             $table->boolean('complete');
             $table->string('title', 255);
             $table->text('desc')->nullable();
+            $table->timestamp('due_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
             // fk user_id -> users(id)
@@ -39,10 +40,6 @@ class CreateTodosTable extends Migration
      */
     public function down()
     {   
-        Schema::table('todos', function(Blueprint $table) {
-            $table->dropForeign('todos_parent_todo_id_foreign');
-            $table->dropForeign('todos_user_id_complete_index');
-        });
         Schema::dropIfExists('todos');
     }
 }
