@@ -37,4 +37,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function todos()
+    {
+        return $this->hasMany(Todo::class, 'user_id', 'id');
+    }
+    public function dueTodos()
+    {
+        return Todo::where('user_id', $this->id)
+            ->where('complete', false)
+            ->get();
+    }
+    public function completedTodos()
+    {
+        return Todo::where('user_id', $this->id)
+            ->where('complete', true)
+            ->get();
+    }
 }
